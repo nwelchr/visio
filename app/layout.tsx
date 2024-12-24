@@ -12,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DALLE Mini",
-  description: "A DALL-E Mini playground",
+  title: "Visio",
+  description: "A DALL-E playground",
 };
 
 export default function RootLayout({

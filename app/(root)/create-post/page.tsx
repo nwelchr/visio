@@ -40,7 +40,7 @@ const CreatePost = () => {
           Create New Image
         </h1>
         <p className="text-slate-600 text-medium max-w-xl pt-2">
-          Create imaginative and visually stunning images with DALLE AI and
+          Create imaginative and visually stunning images with DALL-E AI and
           share them with the community.
         </p>
       </div>
