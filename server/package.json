@@ -1,22 +1,20 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/main.ts",
   "type": "module",
   "scripts": {
-    "start": "nodemon index"
+    "start": "npx tsx src/main.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cloudinary": "^2.5.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.2",
-    "nodemon": "^3.1.9",
     "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
   }
 }
