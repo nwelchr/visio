@@ -23,10 +23,12 @@ const CreatePost = () => {
     console.log("form", form);
   };
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSupriseMe = () => {
-    // setForm((prev) => ({ ...prev, prompt: getRandomPrompt(form.prompt) }));
+    setForm((prev) => ({ ...prev, prompt: getRandomPrompt(form.prompt) }));
   };
 
   const generateImage = async () => {};
