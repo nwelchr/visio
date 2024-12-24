@@ -38,14 +38,22 @@ export default function RootLayout({
             <div className="flex space-x-4">
               <Link
                 href="/create-post"
-                className="font-medium bg-slate-400 text-white px-4 py-2 rounded-lg dark:bg-slate-700 hover:opacity-80"
+                className="max-sm:hidden font-medium bg-slate-400 text-white px-4 py-2 rounded-lg dark:bg-slate-700 hover:opacity-80"
               >
                 Create
+              </Link>
+              <Link
+                href="/create-post"
+                className="sm:hidden font-medium bg-slate-400 text-white px-4 py-2 rounded-lg dark:bg-slate-700 hover:opacity-80"
+              >
+                +
               </Link>
               <LanguageToggle />
             </div>
           </header>
-          {children}
+          <main className="sm:p-8 px-4 py-8 w-full bg-slate-50 dark:bg-slate-900 flex-1 dark:text-white">
+            {children}
+          </main>
         </div>
       </body>
     </html>
