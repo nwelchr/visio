@@ -31,7 +31,7 @@ const Card = ({ _id, name, prompt, photo }: CardProps) => {
             onClick={() => downloadImage(_id, photo)}
             className="outline-none bg-transparent border-none"
           >
-            <ArrowDownTrayIcon className="w-6 h-6 object-contain text-white" />
+            <ArrowDownTrayIcon className="w-6 h-6 object-contain text-white hover:text-slate-300" />
           </button>
         </div>
       </div>

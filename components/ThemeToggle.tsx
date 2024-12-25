@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Classic } from "@theme-toggles/react";
+import "@theme-toggles/react/css/Classic.css";
 
-const LanguageToggle = () => {
+const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Load dark mode preference from localStorage
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
       setIsDarkMode(storedTheme === "dark");
       document.documentElement.classList.toggle("dark", storedTheme === "dark");
     } else {
-      // Default to light mode
       setIsDarkMode(false);
     }
   }, []);
@@ -28,13 +28,16 @@ const LanguageToggle = () => {
   };
 
   return (
-    <button
-      onClick={toggleDarkMode}
-      className="text-3xl drop-shadow-lg hover:opacity-80"
-    >
-      {isDarkMode ? "🌝" : "🌚"}
-    </button>
+    <Classic
+      toggled={isDarkMode}
+      toggle={toggleDarkMode}
+      duration={750}
+      placeholder={undefined}
+      onPointerEnterCapture={undefined}
+      onPointerLeaveCapture={undefined}
+      className="text-slate-700 text-3xl hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300"
+    />
   );
 };
 
-export default LanguageToggle;
+export default ThemeToggle;
