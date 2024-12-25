@@ -23,7 +23,7 @@ router.route("/").post(async (req, res) => {
       model: "dall-e-2",
       prompt,
       n: 1,
-      size: "1024x1024",
+      size: "256x256",
     });
 
     const imageUrl = response.data[0].url;
