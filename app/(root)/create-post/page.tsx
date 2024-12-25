@@ -156,7 +156,7 @@ const CreatePost = () => {
         <div className="mt-10">
           <p className="mt-2 text-slate-600">
             Once you have created the image you want, you can share it with
-            others in the community
+            others in the community.
           </p>
           <button
             className="mt-3 text-white bg-slate-600 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center "
