@@ -7,8 +7,11 @@ import { getRandomPrompt } from "@/lib/utils";
 import FormField from "@/components/FormField";
 import Image from "next/image";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
 
 const CreatePost = () => {
+  const router = useRouter();
+
   const [form, setForm] = useState({
     name: "",
     prompt: "",
@@ -19,8 +22,33 @@ const CreatePost = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log("form", form);
+    if (form.prompt && form.photo) {
+      setLoading(true);
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
+
+        await response.json();
+
+        router.push("/");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      alert(
+        "Please enter a prompt and generate an image to share with the community"
+      );
+    }
   };
 
   const handleChange = (e) => {
