@@ -10,7 +10,6 @@ interface CardProps {
 }
 
 const Card = ({ _id, name, prompt, photo }: CardProps) => {
-  console.log({ _id });
   return (
     <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
       <img

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { getRandomPrompt } from "@/lib/utils";
@@ -9,22 +9,26 @@ import Image from "next/image";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 
+interface FormData {
+  name: string;
+  prompt: string;
+  photo: string;
+}
+
 const CreatePost = () => {
   const router = useRouter();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormData>({
     name: "",
     prompt: "",
     photo: "",
   });
 
-  const [generatingImg, setGeneratingImg] = useState(false);
+  const [generatingImg, setGeneratingImg] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("form", form);
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
@@ -54,7 +58,7 @@ const CreatePost = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -78,8 +82,6 @@ const CreatePost = () => {
         );
 
         const data = await response.json();
-
-        console.log(data.photo);
 
         setForm((prev) => ({
           ...prev,

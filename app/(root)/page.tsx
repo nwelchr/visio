@@ -7,7 +7,7 @@ import FormField from "@/components/FormField";
 import Loader from "@/components/Loader";
 
 interface Post {
-  id: string;
+  _id: string;
   name: string;
   prompt: string;
   photo: string;
@@ -34,7 +34,7 @@ interface RenderCardsProps {
 
 const RenderCards = ({ posts, emptyStateMessage }: RenderCardsProps) => {
   if (posts?.length && posts.length > 0)
-    return posts.map((post) => <Card key={post.id} {...post} />);
+    return posts.map((post) => <Card key={post._id} {...post} />);
 
   return (
     <h2 className="mt-5 font-bold text-slate-600 text-xl uppercase">
@@ -88,7 +88,7 @@ export default function Home() {
         post.name.toLowerCase().includes(debouncedSearchQuery?.toLowerCase())
     );
 
-    setFilteredPosts(postsMatchingQuery);
+    setFilteredPosts(postsMatchingQuery ?? null);
   }, [allPosts, debouncedSearchQuery]);
 
   return (
