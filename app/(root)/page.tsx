@@ -6,21 +6,41 @@ import Card from "@/components/Card";
 import FormField from "@/components/FormField";
 import Loader from "@/components/Loader";
 
-const RenderCards = ({ data, title }) => {
-  console.log({ data, title });
-  if (data?.length > 0)
-    return data.map((post) => <Card key={post.id} {...post} />);
+// Custom hook to delay search input
+const useDebouncedSearch = (searchQuery) => {
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
+  return debouncedQuery;
+};
+
+const RenderCards = ({ posts, emptyStateMessage }) => {
+  if (posts?.length > 0)
+    return posts.map((post) => <Card key={post.id} {...post} />);
 
   return (
-    <h2 className="mt-5 font-bold text-slate-600 text-xl uppercase">{title}</h2>
+    <h2 className="mt-5 font-bold text-slate-600 text-xl uppercase">
+      {emptyStateMessage}
+    </h2>
   );
 };
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState(null);
-  const [searchText, setSearchText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState(null);
 
+  const debouncedSearchQuery = useDebouncedSearch(searchQuery);
+
+  // Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
@@ -34,9 +54,6 @@ export default function Home() {
 
         if (response.ok) {
           const result = await response.json();
-
-          console.log({ result });
-
           setAllPosts(result.data.reverse());
         }
       } catch (error) {
@@ -49,7 +66,18 @@ export default function Home() {
     fetchPosts();
   }, []);
 
-  console.log({ allPosts });
+  // Filter posts based on search query
+  useEffect(() => {
+    const postsMatchingQuery = allPosts?.filter(
+      (post) =>
+        post.prompt
+          .toLowerCase()
+          .includes(debouncedSearchQuery?.toLowerCase()) ||
+        post.name.toLowerCase().includes(debouncedSearchQuery?.toLowerCase())
+    );
+
+    setFilteredPosts(postsMatchingQuery);
+  }, [allPosts, debouncedSearchQuery]);
 
   return (
     <section className="max-w-7xl mx-auto">
@@ -64,7 +92,14 @@ export default function Home() {
       </div>
 
       <div className="mt-16">
-        <FormField />
+        <FormField
+          labelName="Search"
+          type="text"
+          name="search"
+          handleChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for prompts"
+          value={searchQuery}
+        />
       </div>
 
       <div className="mt-10">
@@ -74,17 +109,23 @@ export default function Home() {
           </div>
         ) : (
           <>
-            {searchText && (
+            {debouncedSearchQuery && (
               <h2 className="font-medium text-slate-600 text-xl mb-3">
                 Showing results for{" "}
-                <span className="text-slate-900">{searchText}</span>
+                <span className="text-slate-900">{debouncedSearchQuery}</span>
               </h2>
             )}
             <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3">
-              {searchText ? (
-                <RenderCards data={[]} title="No search results found" />
+              {debouncedSearchQuery ? (
+                <RenderCards
+                  posts={filteredPosts}
+                  emptyStateMessage="No search results found"
+                />
               ) : (
-                <RenderCards data={allPosts} title="No posts found" />
+                <RenderCards
+                  posts={allPosts}
+                  emptyStateMessage="No posts found"
+                />
               )}
             </div>
           </>
