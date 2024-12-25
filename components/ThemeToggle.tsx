@@ -28,6 +28,20 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleDarkMode}
+      className="opacity-80 hover:opacity-100"
+      aria-label="Toggle dark mode"
+    >
+      {isDarkMode ? (
+        <img src="/assets/dark.svg" className="size-10 invert" />
+      ) : (
+        <img src="/assets/light.svg" className="size-10" />
+      )}
+    </button>
+  );
+
+  return (
+    <button
+      onClick={toggleDarkMode}
       className="text-slate-700 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300"
       aria-label="Toggle dark mode"
     >
