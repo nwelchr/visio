@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-900">
+        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900">
           <header className="w-full flex justify-between items-center bg-slate-50 dark:bg-gray-800 sm:px-8 px-4 py-4 border-b border-b-slate-100 dark:border-b-slate-900">
             <Link href="/">
               <Image
