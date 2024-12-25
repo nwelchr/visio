@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "install": "npm run install --legacy-peer-deps",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,7 +10,6 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@theme-toggles/react": "^4.1.0",
     "file-saver": "^2.0.5",
     "next": "15.1.2",
     "react": "^19.0.0",

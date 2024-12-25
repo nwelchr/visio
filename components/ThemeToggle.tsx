@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Classic } from "@theme-toggles/react";
-import "@theme-toggles/react/css/Classic.css";
+import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
 
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,7 +16,6 @@ const ThemeToggle = () => {
     }
   }, []);
 
-  // Toggle dark mode
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => {
       const newMode = !prevMode;
@@ -28,15 +26,17 @@ const ThemeToggle = () => {
   };
 
   return (
-    <Classic
-      toggled={isDarkMode}
-      toggle={toggleDarkMode}
-      duration={750}
-      placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-      className="text-slate-700 text-3xl hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300"
-    />
+    <button
+      onClick={toggleDarkMode}
+      className="text-slate-700 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300"
+      aria-label="Toggle dark mode"
+    >
+      {isDarkMode ? (
+        <MoonIcon className="size-8" strokeWidth={1.5} />
+      ) : (
+        <SunIcon className="size-8" strokeWidth={1.5} />
+      )}
+    </button>
   );
 };
 
