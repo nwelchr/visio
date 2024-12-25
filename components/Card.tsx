@@ -2,7 +2,15 @@ import React from "react";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { downloadImage } from "@/lib/utils";
 
-const Card = ({ _id, name, prompt, photo }) => {
+interface CardProps {
+  _id: string;
+  name: string;
+  prompt: string;
+  photo: string;
+}
+
+const Card = ({ _id, name, prompt, photo }: CardProps) => {
+  console.log({ _id });
   return (
     <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
       <img

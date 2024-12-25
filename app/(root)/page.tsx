@@ -6,9 +6,15 @@ import Card from "@/components/Card";
 import FormField from "@/components/FormField";
 import Loader from "@/components/Loader";
 
-// Custom hook to delay search input
-const useDebouncedSearch = (searchQuery) => {
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+interface Post {
+  id: string;
+  name: string;
+  prompt: string;
+  photo: string;
+}
+
+const useDebouncedSearch = (searchQuery: string): string => {
+  const [debouncedQuery, setDebouncedQuery] = useState<string>("");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -21,8 +27,13 @@ const useDebouncedSearch = (searchQuery) => {
   return debouncedQuery;
 };
 
-const RenderCards = ({ posts, emptyStateMessage }) => {
-  if (posts?.length > 0)
+interface RenderCardsProps {
+  posts: Post[] | null;
+  emptyStateMessage: string;
+}
+
+const RenderCards = ({ posts, emptyStateMessage }: RenderCardsProps) => {
+  if (posts?.length && posts.length > 0)
     return posts.map((post) => <Card key={post.id} {...post} />);
 
   return (
@@ -33,24 +44,26 @@ const RenderCards = ({ posts, emptyStateMessage }) => {
 };
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [allPosts, setAllPosts] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPosts, setFilteredPosts] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [allPosts, setAllPosts] = useState<Post[] | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredPosts, setFilteredPosts] = useState<Post[] | null>(null);
 
   const debouncedSearchQuery = useDebouncedSearch(searchQuery);
 
-  // Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/v1/posts", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "https://visio-kqqa.onrender.com/api/v1/posts",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.ok) {
           const result = await response.json();
@@ -66,7 +79,6 @@ export default function Home() {
     fetchPosts();
   }, []);
 
-  // Filter posts based on search query
   useEffect(() => {
     const postsMatchingQuery = allPosts?.filter(
       (post) =>

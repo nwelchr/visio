@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 const startServer = async () => {
     try {
         connectDB(process.env.MONGODB_URL);
-        app.listen(8080, () => console.log("Server is running on http://localhost:8080"));
+        app.listen(10000, () => console.log("Server is running on https://visio-kqqa.onrender.com"));
     }
     catch (error) {
         console.error("Error connecting to database: ", error);
